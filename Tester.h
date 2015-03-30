@@ -12,29 +12,29 @@
 using namespace std;
 namespace tester {
 
-
-static bool exit = true;
-
 void assert(bool);
 void assertf(bool);
-void autoExit(bool);
 
 class Test {
 private:
 	string name, expected, result;
-	bool msg = true;
+	bool msg;
 	void (*test)();
 	bool pased;
 public:
 	Test(void (*f)(), const char* n, const char* sol);
+	void dbgMsg(const bool&v){msg=v;}
 	void run() ;
-	~Test();
+	~Test(){}
 	friend ostream & operator<<(ostream& os, const Test&);
 };
 
 class Tester {
+private:
+	bool exit;
 public:
 	Tester();
+	void setExit(const bool&v){exit=v;}
 	~Tester();
 };
 }

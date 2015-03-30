@@ -14,12 +14,9 @@ using namespace std;
 
 namespace tester {
 
-static bool checkFile(const char *fileName) {
+static bool isFile(const char *fileName) {
 	ifstream infile(fileName);
 	return infile.good();
-}
-void autoExit(bool v) {
-	exit = v;
 }
 
 void assert(bool expr) {
@@ -33,8 +30,9 @@ void assertf(bool expr) {
 Test::Test(void (*f)(), const char* n, const char* sol) {
 	test = f;
 	name = n;
+	msg = true;
 	pased = false;
-	if (checkFile(sol)) {
+	if (isFile(sol)) {
 		expected = "";
 		ifstream s(sol);
 		while (!s.eof()) {
@@ -42,10 +40,9 @@ Test::Test(void (*f)(), const char* n, const char* sol) {
 			if (c > 0 && c < 126)
 				expected += c;
 		}
-
-	} else {
+	} else
 		expected = sol;
-	}
+
 }
 
 void Test::run() {
@@ -59,19 +56,15 @@ void Test::run() {
 	} catch (const char*& c) {
 		// Restore old cout.
 		cout.rdbuf(oldCoutStreamBuf);
+		result = strCout.str();
 		if (msg)
 			cerr << c << " at " << name << endl;
-		if (exit)
-			throw "BUM!";
+		return;
 	}
 	// Restore old cout.
 	cout.rdbuf(oldCoutStreamBuf);
-	string temp(strCout.str().c_str());
-	result = temp;
-	pased = !result.compare(expected);
-}
-
-Test::~Test() {
+	result = strCout.str();
+	pased = result.compare(expected) == 0;
 }
 
 ostream & operator<<(ostream & os, const Test& t) {
@@ -79,8 +72,8 @@ ostream & operator<<(ostream & os, const Test& t) {
 	 << "=========================" << endl;*/
 	os << t.name << ":" << (t.pased ? "passed" : "not passed");
 	if (!t.pased && t.msg) {
-		os << "\nExpected:\n[" << t.expected << "]" << "\nReceived:\n[" << t.result
-				<< "]";
+		os << "\nExpected:\n[" << t.expected << "]" << "\nReceived:\n["
+				<< t.result << "]";
 	}
 	return os;
 }
