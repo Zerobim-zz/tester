@@ -5,7 +5,7 @@
  *      Author: daniel
  */
 
-#include "Tester.h"
+#include "../Tester.h"
 using namespace tester;
 
 void prueba() {
@@ -18,7 +18,7 @@ int main() {
 	try {
 		assert(true);
 		assertf(false);
-		Test t1(prueba, "test1", "./test1");
+		Test t1(prueba, "test1", "./testing_the_tester/test1");
 		t1.dbgMsg(false);
 		Test t2(prueba, "test2", "line1\nLine2\nline3\n");
 		t2.dbgMsg(false);
