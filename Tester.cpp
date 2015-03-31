@@ -14,6 +14,9 @@ using namespace std;
 
 namespace tester {
 
+unsigned int Tester::separation=25;
+char Tester::separator='=';
+
 static bool isFile(const char *fileName) {
 	ifstream infile(fileName);
 	return infile.good();
@@ -30,7 +33,7 @@ void assertf(bool expr) {
 Test::Test(void (*f)(), const char* n, const char* sol) {
 	test = f;
 	name = n;
-	msg = true;
+	msg = false;
 	pased = false;
 	if (isFile(sol)) {
 		expected = "";
@@ -42,7 +45,6 @@ Test::Test(void (*f)(), const char* n, const char* sol) {
 		}
 	} else
 		expected = sol;
-
 }
 
 void Test::run() {
@@ -68,8 +70,7 @@ void Test::run() {
 }
 
 ostream & operator<<(ostream & os, const Test& t) {
-	/*cout << "=========================" << endl << "Running Tests" << endl
-	 << "=========================" << endl;*/
+
 	os << t.name << ":" << (t.pased ? "passed" : "not passed");
 	if (!t.pased && t.msg) {
 		os << "\nExpected:\n[" << t.expected << "]" << "\nReceived:\n["
@@ -77,4 +78,38 @@ ostream & operator<<(ostream & os, const Test& t) {
 	}
 	return os;
 }
+
+void Tester::printSeparation() {
+	for (unsigned int i = 0; i < separation; i++)
+		cout << separator;
+	cout << endl;
+}
+
+void Tester::run() {
+	printSeparation();
+	cout << "Running Tester " << nombre << endl;
+	printSeparation();
+	for (unsigned int i = 0; i < tests.size(); i++) {
+		tests[i].run();
+		cout << tests[i] << endl;
+	}
+	separation-=2;
+	for (unsigned int i = 0; i < testers.size(); i++) {
+		testers[i].run();
+	}
+	separation+=2;
+}
+
+void Tester::dbgMsg(const bool& v) {
+	for (unsigned int i = 0; i < tests.size(); i++)
+		tests[i].dbgMsg(v);
+}
+}
+
+tester::Tester::Tester(const char*a) {
+	nombre = a;
+	exit = true;
+}
+
+tester::Tester::~Tester() {
 }

@@ -9,7 +9,9 @@
 #define TESTER_H_
 
 #include <iostream>
+#include <vector>
 using namespace std;
+
 namespace tester {
 
 void assert(bool);
@@ -32,8 +34,18 @@ public:
 class Tester {
 private:
 	bool exit;
+	string nombre;
+	vector<Test> tests;
+	vector<Tester> testers;
+	static unsigned int separation;
+	static char separator;
+	void printSeparation();
 public:
-	Tester();
+	Tester(const char*);
+	void add(const Test&a){tests.push_back(a);}
+	void add(const Tester&a){testers.push_back(a);}
+	void run();
+	void dbgMsg(const bool&);
 	void setExit(const bool&v){exit=v;}
 	~Tester();
 };
