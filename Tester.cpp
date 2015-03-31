@@ -14,19 +14,18 @@ using namespace std;
 
 namespace tester {
 
-unsigned int Tester::separation=25;
-char Tester::separator='=';
+unsigned int Tester::levels = 0;
 
 static bool isFile(const char *fileName) {
 	ifstream infile(fileName);
 	return infile.good();
 }
 
-void assert(bool expr) {
+void assert(const bool& expr) {
 	if (!expr)
 		throw "Assertion true failed";
 }
-void assertf(bool expr) {
+void assertf(const bool& expr) {
 	if (expr)
 		throw "Assertion false failed";
 }
@@ -79,34 +78,46 @@ ostream & operator<<(ostream & os, const Test& t) {
 	return os;
 }
 
-void Tester::printSeparation() {
-	for (unsigned int i = 0; i < separation; i++)
-		cout << separator;
-	cout << endl;
+void Tester::printHead() {
+	string temp("Running Tester ");
+	temp+=nombre;
+
+	for (unsigned int i = 0; i < (temp.size()+levels)/separator.size(); i++)
+			cout << separator;
+		cout << endl;
+
+	for(unsigned int i=0;i<levels;i++)
+		cout<<'*';
+	cout << temp << endl;
+
+	for (unsigned int i = 0; i < (temp.size()+levels)/separator.size(); i++)
+			cout << separator;
+		cout << endl;
 }
 
 void Tester::run() {
-	printSeparation();
-	cout << "Running Tester " << nombre << endl;
-	printSeparation();
+	printHead();
 	for (unsigned int i = 0; i < tests.size(); i++) {
 		tests[i].run();
 		cout << tests[i] << endl;
 	}
-	separation-=2;
+	--levels;
 	for (unsigned int i = 0; i < testers.size(); i++) {
 		testers[i].run();
 	}
-	separation+=2;
+	++levels;
 }
 
 void Tester::dbgMsg(const bool& v) {
 	for (unsigned int i = 0; i < tests.size(); i++)
-		tests[i].dbgMsg(v);
+			tests[i].dbgMsg(v);
+	for (unsigned int i = 0; i < testers.size(); i++)
+			testers[i].dbgMsg(v);
 }
 }
 
 tester::Tester::Tester(const char*a) {
+	separator='=';
 	nombre = a;
 	exit = true;
 }

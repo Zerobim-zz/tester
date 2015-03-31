@@ -14,8 +14,8 @@ using namespace std;
 
 namespace tester {
 
-void assert(bool);
-void assertf(bool);
+void assert(const bool&);
+void assertf(const bool&);
 
 class Test {
 private:
@@ -25,28 +25,39 @@ private:
 	bool pased;
 public:
 	Test(void (*f)(), const char* n, const char* sol);
-	void dbgMsg(const bool&v){msg=v;}
-	void run() ;
-	~Test(){}
+	void dbgMsg(const bool&v) {
+		msg = v;
+	}
+	void run();
+	~Test() {
+	}
 	friend ostream & operator<<(ostream& os, const Test&);
 };
 
 class Tester {
 private:
+	static unsigned int levels;
+
 	bool exit;
 	string nombre;
 	vector<Test> tests;
 	vector<Tester> testers;
-	static unsigned int separation;
-	static char separator;
-	void printSeparation();
+	string separator;
+	void printHead();
 public:
 	Tester(const char*);
-	void add(const Test&a){tests.push_back(a);}
-	void add(const Tester&a){testers.push_back(a);}
+	void add(const Test&a) {
+		tests.push_back(a);
+	}
+	void add(const Tester&a) {
+		if (testers.size() == 0)
+			++levels;
+		testers.push_back(a);
+	}
 	void run();
 	void dbgMsg(const bool&);
-	void setExit(const bool&v){exit=v;}
+	void setExit(const bool&v) {exit = v;}
+	void setSeparator(const char* c){separator=c;}
 	~Tester();
 };
 }

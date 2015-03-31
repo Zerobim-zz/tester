@@ -27,12 +27,18 @@ int main() {
 		Tester bigGroup("The Group");
 		Tester smallGroup("little Group");
 		Tester group("group1"),gr2("grupete");
+
 		group.add(t1);
 		group.add(t2);
+		group.setSeparator("_");
+
 		gr2.add(t1);
 		gr2.add(t2);
+		gr2.setSeparator("_");
+
 		smallGroup.add(gr2);
 		smallGroup.add(group);
+		smallGroup.setSeparator("\\\\//");
 
 		bigGroup.add(smallGroup);
 		bigGroup.add(smallGroup);
