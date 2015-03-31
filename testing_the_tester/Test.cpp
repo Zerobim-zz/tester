@@ -5,7 +5,7 @@
  *      Author: daniel
  */
 
-#include "../Tester.h"
+#include "Test.h"
 using namespace tester;
 
 void prueba() {
@@ -42,9 +42,10 @@ int main() {
 
 		bigGroup.add(smallGroup);
 		bigGroup.add(smallGroup);
+		//bigGroup.dbgMsg(true);
 		bigGroup.run();
 
-
+		cout<<bigGroup<<endl;
 		cout << "OK" << endl;
 
 	} catch (const char*& c) {

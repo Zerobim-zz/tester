@@ -14,8 +14,6 @@ using namespace std;
 
 namespace tester {
 
-unsigned int Tester::levels = 0;
-
 static bool isFile(const char *fileName) {
 	ifstream infile(fileName);
 	return infile.good();
@@ -78,49 +76,83 @@ ostream & operator<<(ostream & os, const Test& t) {
 	return os;
 }
 
-void Tester::printHead() {
-	string temp("Running Tester ");
-	temp+=nombre;
-
-	for (unsigned int i = 0; i < (temp.size()+levels)/separator.size(); i++)
-			cout << separator;
-		cout << endl;
-
-	for(unsigned int i=0;i<levels;i++)
-		cout<<'*';
-	cout << temp << endl;
-
-	for (unsigned int i = 0; i < (temp.size()+levels)/separator.size(); i++)
-			cout << separator;
-		cout << endl;
+void Tester::printLevel() const {
+	for (unsigned int i = 0; i < level; i++)
+		cout << c_level;
 }
 
+void tester::Tester::printTestLevel() const {
+	printLevel();
+	cout << c_level;
+}
+
+void Tester::printInTree(const char*& str)const{
+	printLevel();
+	cout<<str;
+}
+
+
+
+void Tester::printHead() const {
+	string temp("Running Tester ");
+	temp += nombre;
+	printSeparation(temp.size());
+
+	printLevel();
+	cout << temp << endl;
+
+	printSeparation(temp.size());
+}
+
+
+
 void Tester::run() {
-	printHead();
+	if (msg)
+		printHead();
 	for (unsigned int i = 0; i < tests.size(); i++) {
 		tests[i].run();
-		cout << tests[i] << endl;
+		if (msg)
+			cout << tests[i] << endl;
 	}
-	--levels;
 	for (unsigned int i = 0; i < testers.size(); i++) {
 		testers[i].run();
 	}
-	++levels;
 }
 
 void Tester::dbgMsg(const bool& v) {
+	msg = v;
 	for (unsigned int i = 0; i < tests.size(); i++)
-			tests[i].dbgMsg(v);
+		tests[i].dbgMsg(v);
 	for (unsigned int i = 0; i < testers.size(); i++)
-			testers[i].dbgMsg(v);
-}
+		testers[i].dbgMsg(v);
 }
 
 tester::Tester::Tester(const char*a) {
-	separator='=';
+	level = 0;
+	c_level = '|';
+	separator = '=';
+	msg = false;
 	nombre = a;
 	exit = true;
 }
 
+ostream& operator<<(ostream& os, const Tester& t) {
+
+	t.printLevel();
+	os << "Results of " << t.nombre << " :" << endl;
+
+	for (unsigned int i = 0; i < t.tests.size(); i++) {
+		t.printTestLevel();
+		os << t.tests[i] << endl;
+	}
+	for (unsigned int i = 0; i < t.testers.size(); i++) {
+		t.printLevel();
+		os << t.testers[i];
+	}
+	return os;
+}
+
 tester::Tester::~Tester() {
 }
+}
+
