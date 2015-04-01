@@ -12,6 +12,8 @@
 #include <vector>
 using namespace std;
 
+#include "Test.h"
+
 namespace tester {
 
 void assert(const bool&);
@@ -38,10 +40,7 @@ public:
 	void add(const Test&a) {
 		tests.push_back(a);
 	}
-	void add(Tester&a) {
-		a.level=level+1;
-		testers.push_back(a);
-	}
+	void add(Tester&a);
 	void run();
 	void dbgMsg(const bool&);
 	void setExit(const bool&v){

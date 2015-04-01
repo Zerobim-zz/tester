@@ -1,11 +1,13 @@
-#ifndef TESTER_H_
-#define TESTER_H_
+#ifndef TEST_H_
+#define TEST_H_
 
 #include <iostream>
 using namespace std;
 
+
+namespace tester {
 class Test {
-friend class Tester;
+	friend class Tester;
 
 private:
 	string name, expected, result;
@@ -22,5 +24,5 @@ public:
 	}
 	friend ostream & operator<<(ostream&, const Test&);
 };
-
+}
 #endif

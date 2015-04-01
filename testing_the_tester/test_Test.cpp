@@ -5,7 +5,7 @@
  *      Author: daniel
  */
 
-#include "Test.h"
+#include "Tester.h"
 using namespace tester;
 
 void prueba() {
@@ -27,6 +27,7 @@ int main() {
 		Tester bigGroup("The Group");
 		Tester smallGroup("little Group");
 		Tester group("group1"),gr2("grupete");
+
 
 		group.add(t1);
 		group.add(t2);
