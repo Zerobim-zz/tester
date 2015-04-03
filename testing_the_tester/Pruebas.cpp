@@ -18,7 +18,7 @@ int main() {
 	try {
 		assert(true);
 		assertf(false);
-		Test t1(prueba, "test1", "./testing_the_tester/test1");
+		Test t1(prueba, "test1", "./testing_the_tester/test1.txt");
 		Test t2(prueba, "test2", "line1\nLine2\nline3\n");
 		t1.run();
 		t2.run();

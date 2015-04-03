@@ -12,27 +12,30 @@ OBJS=$(subst $(H_FO),$(T_FO),$(H_FIS:.h=.o))
 
 LINK=g++
 CC=g++
-C_FLAGS=-g -c
+
 C_IN=-I $(H_FO)
 C_OUT=-o $@
 L_OUT=-o $@
 
 all:$(EXE)
+all:C_FLAGS=-g -c -fPIC
 
 $(EXE): $(OBJS) $(OB_TESTS)
-	$(LINK) $(L_OUT) $^
+	$(LINK) $(L_OUT) $^ &&\
+	$(LINK) -shared -o libtester.so $(OBJS)
 	
 $(OB_TESTS):$(T_FO)/%.o: $(TESTS_FO)/%.cpp
-		$(CC) $(C_FLAGS) $(C_IN) $(C_OUT) $^
+		@$(CC) $(C_FLAGS) $(C_IN) $(C_OUT) $^
 
 $(OBJS):$(T_FO)/%.o:$(H_FO)/%.h $(S_FO)/%.cpp | $(T_FO)
 	$(CC) $(C_FLAGS) $(C_IN) $(C_OUT) $(filter %.cpp,$^)
 	
-	
-	
 $(T_FO):
 	[ -d $@ ] || mkdir $@
+	
+
 
 clean:
-	rm -f $(T_FO)/*.o $(T_FO)/main;
-	find . -maxdepth 1 -mindepth 1 -name $(T_FO) -type d -empty -delete
+	@rm -f $(T_FO)/*.o $(T_FO)/main;
+	@find . -maxdepth 1 -mindepth 1 -name $(T_FO) -type d -empty -delete;
+	@rm -f libtester.so
