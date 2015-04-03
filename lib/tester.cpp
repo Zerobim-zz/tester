@@ -5,9 +5,10 @@
  *      Author: daniel
  */
 
-#include "Tester.h"
 #include <iostream>
 #include <cstring>
+
+#include "tester.h"
 using namespace std;
 
 namespace tester {

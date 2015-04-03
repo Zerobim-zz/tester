@@ -1,7 +1,8 @@
-#include "Test.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
+
+#include "../include/test.h"
 using namespace std;
 
 namespace tester {

@@ -12,7 +12,7 @@
 #include <vector>
 using namespace std;
 
-#include "Test.h"
+#include "test.h"
 
 namespace tester {
 
