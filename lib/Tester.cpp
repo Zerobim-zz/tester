@@ -5,7 +5,7 @@
  *      Author: daniel
  */
 
-#include "tester.h"
+#include "Tester.h"
 #include <iostream>
 #include <cstring>
 using namespace std;

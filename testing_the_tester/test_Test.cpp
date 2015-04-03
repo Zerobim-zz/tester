@@ -5,7 +5,7 @@
  *      Author: daniel
  */
 
-#include "tester.h"
+#include "Tester.h"
 using namespace tester;
 
 void prueba() {

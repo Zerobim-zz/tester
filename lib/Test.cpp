@@ -1,4 +1,4 @@
-#include "test.h"
+#include "Test.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
