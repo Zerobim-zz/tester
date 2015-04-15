@@ -1,6 +1,8 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include <string>
+#include <algorithm>
 
 #include "../include/test.h"
 using namespace std;
@@ -20,10 +22,17 @@ Test::Test(void (*f)(), const char* n, const char* sol) {
 	if (isFile(sol)) {
 		expected = "";
 		ifstream s(sol);
-		char c = char(s.get());
-		while (!s.eof()) {
-			expected += c;
-			c = char(s.get());
+		string temp;
+		bool nl = false;
+		while (getline(s, temp)) {
+			bool aux=false;
+			if(temp.find("\r")!=string::npos){
+				replace(temp.begin(),temp.end(),'\r','\n');
+				aux=true;
+			}
+			expected += temp;
+			if (!aux && !s.eof())
+				expected += "\n";
 		}
 	} else
 		expected = sol;
