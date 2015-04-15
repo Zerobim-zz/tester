@@ -43,8 +43,9 @@ int main() {
 
 		bigGroup.add(smallGroup);
 		bigGroup.add(smallGroup);
-		//bigGroup.dbgMsg(true);
+
 		bigGroup.run();
+		bigGroup.dbgMsg(true);
 
 		cout<<bigGroup<<endl;
 		cout << "OK" << endl;

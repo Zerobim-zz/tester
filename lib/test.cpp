@@ -20,17 +20,17 @@ Test::Test(void (*f)(), const char* n, const char* sol) {
 	if (isFile(sol)) {
 		expected = "";
 		ifstream s(sol);
+		char c = char(s.get());
 		while (!s.eof()) {
-			char c = char(s.get());
-			if (c > 0 && c < 126)
-				expected += c;
+			expected += c;
+			c = char(s.get());
 		}
 	} else
 		expected = sol;
 }
 void Test::run() {
-	if(msg)
-		cout<<"Test "<<name<<":";
+	if (msg)
+		cout << "Test " << name << ":";
 	// Redirect cout.
 	streambuf* oldCoutStreamBuf = cout.rdbuf();
 	stringstream strCout;
@@ -42,16 +42,16 @@ void Test::run() {
 		// Restore old cout.
 		cout.rdbuf(oldCoutStreamBuf);
 		result = strCout.str();
-		if (msg){
-			cout<<"NOT Passed";
+		if (msg) {
+			cout << "NOT Passed";
 			cerr << c << " at " << name << endl;
 		}
 		return;
 	}
 	// Restore old cout.
 	cout.rdbuf(oldCoutStreamBuf);
-	if(msg)
-		cout<<"Passed";
+	if (msg)
+		cout << "Passed";
 	result = strCout.str();
 	pased = result.compare(expected) == 0;
 }

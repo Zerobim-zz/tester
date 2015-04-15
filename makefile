@@ -38,7 +38,7 @@ $(LIB_NAME):$(OBJS)
 
 install:$(LIB_NAME) $(H_FIS)
 	@ls /root 2>/dev/null &&\
-	cp -i-t /usr/local/include $(H_FIS) &&\
+	cp -i -t /usr/local/include $(H_FIS) &&\
 	cp -i $(LIB_NAME) /usr/local/lib || \
 	echo "Error: Root privileges needed"
 	
