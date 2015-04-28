@@ -9,6 +9,8 @@
 #define TESTER_H_
 
 #include <iostream>
+#include <sstream>
+#include <cstring>
 #include <vector>
 using namespace std;
 
@@ -17,7 +19,12 @@ using namespace std;
 namespace tester {
 
 void assert(const bool&);
-void assertf(const bool&);
+template<class T>
+void assert_ostream(const T &o, const char * str) {
+	stringstream ss;
+	ss << o;
+	assert(ss.str().compare(str) == 0);
+}
 
 class Tester {
 friend ostream & operator<<(ostream&, const Tester&);
@@ -41,7 +48,9 @@ public:
 		tests.push_back(a);
 	}
 	void add(Tester&a);
-	void run();
+	void runAssertions();
+	void runOutput();
+	void run(){runAssertions();runOutput();}
 	void dbgMsg(const bool&);
 	void setExit(const bool&v){
 		exit = v;

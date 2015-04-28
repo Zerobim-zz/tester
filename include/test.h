@@ -19,7 +19,9 @@ public:
 	void dbgMsg(const bool&v) {
 		msg = v;
 	}
-	void run();
+	void runAssertions();
+	void runOutput();
+	void run(){runAssertions();runOutput();}
 	~Test() {
 	}
 	friend ostream & operator<<(ostream&, const Test&);

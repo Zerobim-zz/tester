@@ -54,20 +54,34 @@ void Tester::add(Tester&a) {
 	testers.push_back(a);
 }
 
-void Tester::run() {
+void Tester::runOutput() {
 	if (msg)
 		printHead();
 	for (unsigned int i = 0; i < tests.size(); i++) {
 		if (msg)
 			printTestLevel();
-		tests[i].run();
+		tests[i].runOutput();
 		if (msg)
 			cout << endl;
 	}
 
-	for (unsigned int i = 0; i < testers.size(); i++) {
-		testers[i].run();
+	for (unsigned int i = 0; i < testers.size(); i++)
+		testers[i].runOutput();
+
+}
+void Tester::runAssertions() {
+	if (msg)
+		printHead();
+	for (unsigned int i = 0; i < tests.size(); i++) {
+		if (msg)
+			printTestLevel();
+		tests[i].runAssertions();
+		if (msg)
+			cout << endl;
 	}
+
+	for (unsigned int i = 0; i < testers.size(); i++)
+		testers[i].runAssertions();
 
 }
 

@@ -11,13 +11,13 @@ using namespace tester;
 void prueba() {
 	assert(true);
 	cout << "line1" << endl << "Line2\nline3" << endl;
-	assertf(false);
+	assert(!false);
 }
 
 int main() {
 	try {
 		assert(true);
-		assertf(false);
+		assert(!false);
 		Test t1(prueba, "test1", "/home/daniel/Enlaces/PED/Practica/Practica1/src/tests/tcalendario/tad01.cpp.sal");
 		Test t2(prueba, "test2", "line1\nLine2\nline3\n");
 		t1.run();
