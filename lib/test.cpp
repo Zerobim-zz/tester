@@ -39,8 +39,10 @@ Test::Test(void (*f)(), const char* n, const char* sol) {
 }
 
 void Test::runAssertions() {
-	if (msg)
-		cout << "Test " << name << "Assertions:";
+	if (msg){
+		cout << "Test " << name << "(assertions):";
+		cout.flush();
+	}
 	// Redirect cout.
 	streambuf* oldCoutStreamBuf = cout.rdbuf();
 	stringstream strCout;
@@ -50,20 +52,24 @@ void Test::runAssertions() {
 	} catch (const char*& c) {
 		// Restore old cout.
 		cout.rdbuf(oldCoutStreamBuf);
+		pased=false;
 		if (msg) {
 			cerr << c << " at " << name << endl;
-			cout << "NOT Passed";
+			cout << "NOT Passed"<<endl;
 		}
 		return;
 	}
 	// Restore old cout.
 	cout.rdbuf(oldCoutStreamBuf);
+	pased=true;
 	if (msg)
-		cout << "Passed";
+		cout << "Passed"<<endl;
 }
 void Test::runOutput() {
-	if (msg)
-		cout << "Test " << name << "Output:";
+	if (msg){
+		cout << "Test " << name << "(output):";
+		cout.flush();
+	}
 	// Redirect cout.
 	streambuf* oldCoutStreamBuf = cout.rdbuf();
 	stringstream strCout;
@@ -79,9 +85,9 @@ void Test::runOutput() {
 	result = strCout.str();
 	pased = result.compare(expected) == 0;
 	if (pased && msg)
-		cout << "Passed";
+		cout << "Passed"<<endl;
 	else if (msg)
-		cout << "NOT Passed";
+		cout << "NOT Passed"<<endl;
 
 }
 

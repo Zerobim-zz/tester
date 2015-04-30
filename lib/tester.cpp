@@ -61,8 +61,6 @@ void Tester::runOutput() {
 		if (msg)
 			printTestLevel();
 		tests[i].runOutput();
-		if (msg)
-			cout << endl;
 	}
 
 	for (unsigned int i = 0; i < testers.size(); i++)
@@ -76,8 +74,6 @@ void Tester::runAssertions() {
 		if (msg)
 			printTestLevel();
 		tests[i].runAssertions();
-		if (msg)
-			cout << endl;
 	}
 
 	for (unsigned int i = 0; i < testers.size(); i++)
