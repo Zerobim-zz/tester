@@ -17,10 +17,6 @@ void assert(const bool& expr) {
 	if (!expr)
 		throw "Assertion true failed";
 }
-void assertf(const bool& expr) {
-	if (expr)
-		throw "Assertion false failed";
-}
 
 void Tester::printLevel() const {
 	for (unsigned int i = 0; i < level; i++)
@@ -62,7 +58,6 @@ void Tester::runOutput() {
 			printTestLevel();
 		tests[i].runOutput();
 	}
-
 	for (unsigned int i = 0; i < testers.size(); i++)
 		testers[i].runOutput();
 
