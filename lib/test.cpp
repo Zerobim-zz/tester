@@ -43,15 +43,9 @@ void Test::runAssertions() {
 		cout << "Test " << name << "(assertions):";
 		cout.flush();
 	}
-	// Redirect cout.
-	streambuf* oldCoutStreamBuf = cout.rdbuf();
-	stringstream strCout;
-	cout.rdbuf(strCout.rdbuf());
 	try {
 		test();
 	} catch (const char*& c) {
-		// Restore old cout.
-		cout.rdbuf(oldCoutStreamBuf);
 		pased=false;
 		if (msg) {
 			cerr << c << " at " << name << endl;
@@ -60,7 +54,6 @@ void Test::runAssertions() {
 		return;
 	}
 	// Restore old cout.
-	cout.rdbuf(oldCoutStreamBuf);
 	pased=true;
 	if (msg)
 		cout << "Passed"<<endl;
